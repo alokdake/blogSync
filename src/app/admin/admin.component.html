@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!-- Coding by CodingNepal | www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Responsiive Admin Dashboard | CodingLab</title>
+    <link rel="stylesheet" href="admin.component.scss" />
+    <!-- Boxicons CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class="bx bxl-c-plus-plus"></i>
+        <span class="logo_name">BlogSync</span>
+      </div>
+    </div>
+    <section class="home-section">
+      <nav>
+        <div class="sidebar-button">
+          <i class="bx bx-menu sidebarBtn"></i>
+          <span class="dashboard"><b>Dashboard</b></span>
+        </div>
+        <div class="search-box">
+          <input type="text" placeholder="Search..." />
+          <i class="bx bx-search"></i>
+        </div>
+        <div class="profile-details">
+          <img
+            style="margin-left: 10px"
+            src="https://indianmemetemplates.com/wp-content/uploads/virat-kohli-big-eyes-meme.jpg"
+            alt=""
+          />
+          <span
+            (click)="logout()"
+            style="font-size: 28px; cursor: pointer"
+            class="admin_name"
+            >Mafia</span
+          >
+          <i style="cursor: pointer" (click)="logout()"></i>
+        </div>
+      </nav>
+
+      <div class="home-content">
+        <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic"><b>Blogs</b></div>
+              <div class="number">{{ allBlogCount }}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Up from yesterday</span>
+              </div>
+            </div>
+            <i class="bx bx-cart-alt cart"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic"><b>Total Users</b></div>
+              <div class="number">{{ allUserCount }}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Up from yesterday</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Reported Blogs</div>
+              <div class="number">{{ reportblogcount }}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Up from yesterday</span>
+              </div>
+            </div>
+            <i class="bx bx-cart cart three"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic"><b>Total Admin</b></div>
+              <div class="number">1</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Down From Today</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-download cart four"></i>
+          </div>
+        </div>
+
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title"><b>Recent Blogs</b></div>
+            <div class="sales-details">
+              <ul class="details">
+                <li class="topic"><b>Blog Title</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a>{{ blogs.title }}</a>
+                </li>
+              </ul>
+
+              <ul class="details">
+                <li class="topic"><b>Category</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a>{{ blogs.category }}</a>
+                </li>
+              </ul>
+              <ul class="details">
+                <li class="topic"><b>Blog Posted By</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a>{{ blogs.author }}</a>
+                </li>
+              </ul>
+              <ul class="details">
+                <li class="topic"><b>Blog Posted On</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a>{{ blogs.createdAt | date : "medium" }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="top-sales box">
+            <div class="title"><b>Users</b></div>
+            <ul class="top-sales-details">
+              <li *ngFor="let users of registeredUserDetails">
+                <a>
+                  <span class="product"
+                    >{{ users.firstname }} {{ users.lastname }}</span
+                  >
+                </a>
+                <a style="color: purple" href="mailto:{{ users.email }}">{{
+                  users.email
+                }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br />
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title"><b>Action On Blogs</b></div>
+            <div class="sales-details">
+              <ul class="details">
+                <li class="topic"><b>Blog ID</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a style="cursor: pointer" (click)="viewblog(blogs._id)">{{
+                    blogs._id
+                  }}</a>
+                </li>
+              </ul>
+
+              <ul class="details">
+                <li class="topic"><b>Blog Title</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a>{{ blogs.title }}</a>
+                </li>
+              </ul>
+              <ul class="details">
+                <li class="topic"><b>Blog Posted By</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <a>{{ blogs.author }}</a>
+                </li>
+              </ul>
+              <ul class="details">
+                <li class="topic"><b>Action</b></li>
+                <li *ngFor="let blogs of allBlogs">
+                  <div style="display: flex; cursor: pointer">
+                    <a style="color: green" (click)="editBlog(blogs._id)"
+                      >Edit</a
+                    >
+                    <a
+                      (click)="deleteBlog(blogs._id)"
+                      style="margin-left: 10px; color: red"
+                      >Delete</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="top-sales box">
+            <div class="title"><b>Action On Users</b></div>
+            <ul class="top-sales-details">
+              <li *ngFor="let users of registeredUserDetails">
+                <a>
+                  <span class="product"
+                    >{{ users.firstname }} {{ users.lastname }}</span
+                  >
+                </a>
+                <span
+                  style="cursor: pointer; color: red"
+                  (click)="deleteUser(users._id)"
+                  >Delete User</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br />
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title"><b>Action On Reported Blogs</b></div>
+            <div class="sales-details">
+              <ul class="details">
+                <li class="topic"><b>Blog ID</b></li>
+                <li
+                  style="margin-right: 10px"
+                  *ngFor="let report of reportblog"
+                >
+                  <a
+                    style="cursor: pointer"
+                    (click)="viewBlog(report.blogId)"
+                    >{{ report.blogId }}</a
+                  >
+                </li>
+              </ul>
+
+              <ul class="details">
+                <li class="topic"><b>Author</b></li>
+                <li
+                  style="margin-right: 10px"
+                  *ngFor="let report of reportblog"
+                >
+                  <a>{{ report.author }}</a>
+                </li>
+              </ul>
+
+              <ul class="details">
+                <li class="topic"><b>Blog Repored By</b></li>
+                <li
+                  style="margin-right: 10px"
+                  *ngFor="let report of reportblog"
+                >
+                  <a>{{ report.name }}</a>
+                </li>
+              </ul>
+              <ul class="details">
+                <li class="topic"><b>Reason</b></li>
+                <li
+                  style="margin-right: 10px"
+                  *ngFor="let report of reportblog"
+                >
+                  <a>{{ report.reasons }}</a>
+                </li>
+              </ul>
+
+              <ul class="details">
+                <li class="topic"><b>Action</b></li>
+                <li
+                  style="margin-right: 10px"
+                  *ngFor="let report of reportblog"
+                >
+                  <div style="display: flex; cursor: pointer">
+                    <!-- <a style="color: green" (click)="editBlog(blogs._id)"
+                      >Edit</a
+                    > -->
+                    <a
+                      (click)="deleteReportedBlog(report._id, report.blogId)"
+                      style="margin-left: 10px; color: red"
+                      >Delete</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".sidebarBtn");
+      sidebarBtn.onclick = function () {
+        sidebar.classList.toggle("active");
+        if (sidebar.classList.contains("active")) {
+          sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      };
+    </script>
+  </body>
+</html>

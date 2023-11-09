@@ -1,62 +1,39 @@
 import { Component } from '@angular/core';
-import { LocalstorageService } from './localstorage.service';
-import { BlogbackendService } from './blogbackend.service';
+import { BlogbackendService } from '../blogbackend.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LocalstorageService } from '../localstorage.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
-export class AppComponent {
-  title = 'blogfrontend';
-  loggedInUserDetails: any;
+export class HomeComponent {
+  constructor(
+    private backend: BlogbackendService,
+    private router: Router,
+    private toastr: ToastrService,
+    private localstorage: LocalstorageService
+  ) {}
   registeredUserDetails: any;
   userDetails: any = [];
   allBlogs: any[] = [];
   blogs: any[] = [];
   showFiller = false;
   filter: any;
-  updatedDetails: any;
-  loggedInUserId: any;
-  lastname: any;
-  email: any;
-  firstname: any;
-  updatedFirstName: any;
+  noResultReturned!: boolean;
 
-  constructor(
-    private ls: LocalstorageService,
-    private backend: BlogbackendService,
-    private router: Router,
-    private toastr: ToastrService
-  ) {}
-
-  ngOnInit() {
-    this.ls.getData().subscribe((data: any) => {
-      this.loggedInUserDetails = JSON.parse(data);
-      console.log(this.loggedInUserDetails);
-
-      if (this.loggedInUserDetails) {
-        this.loggedInUserId = this.loggedInUserDetails._id;
-        this.firstname = this.loggedInUserDetails.firstname;
-        this.lastname = this.loggedInUserDetails.lastname;
-        this.email = this.loggedInUserDetails.email;
-      }
-    });
-    this.backend.getUserById(this.loggedInUserId).subscribe((data: any) => {
-      this.updatedDetails = data;
-      console.log(this.updatedDetails);
-    });
-
-    this.backend.data$.subscribe((data: any) => {
-      this.updatedFirstName = data;
-      console.log(this.updatedFirstName);
+  ngOnInit(): void {
+    this.localstorage.getData().subscribe((data: any) => {
+      this.userDetails = JSON.parse(data);
+      console.log(this.userDetails);
     });
     this.getBlogs();
   }
 
   getBlogs() {
+    this.noResultReturned = true;
     this.backend.getAllBlogs().subscribe((data: any) => {
       this.allBlogs = data.blogs;
       console.log(this.allBlogs);
@@ -64,15 +41,15 @@ export class AppComponent {
       console.log(this.blogs);
     });
   }
+
   logout() {
-    this.ls.removeData();
-    this.updatedFirstName = '';
+    localStorage.removeItem('userData');
     this.toastr.success('Logout Sucessfully !!');
     this.router.navigate(['/login']);
   }
 
   userprofile() {
-    this.router.navigate(['/userprofile']);
+    // this.router.navigate(['/userprofile']);
   }
 
   viewBlog(blogId: any) {

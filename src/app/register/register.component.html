@@ -1,0 +1,158 @@
+<div class="login-page">
+  <div class="form">
+    <h2><b>Sign Up</b></h2>
+    <br />
+
+    <form [formGroup]="registerationForm" class="Register-form">
+      <div>
+        <input
+          [(ngModel)]="firstname"
+          type="text"
+          formControlName="firstname"
+          placeholder="First Name *"
+          id="form3Example1cg"
+          class="form-control form-control-lg"
+          [ngClass]="{
+            'is-invalid':
+              registerationForm.get('firstname')?.touched &&
+              registerationForm.get('firstname')?.invalid
+          }"
+        />
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Firstname.errors?.['required'] && (Firstname.touched || Firstname.dirty) "
+        >
+          First Name is Requried.
+        </div>
+
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Firstname.errors?.['minlength'] && (Firstname.touched || Firstname.dirty) "
+        >
+          User Name is too short.
+        </div>
+
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Firstname.errors?.['pattern'] && (Firstname.dirty || Firstname.touched) "
+        >
+          First Name should start with Alphabet.
+        </div>
+      </div>
+      <div>
+        <input
+          [(ngModel)]="lastname"
+          type="text"
+          formControlName="lastname"
+          placeholder="Last Name *"
+          id="form3Example1cg"
+          class="form-control form-control-lg"
+          [ngClass]="{
+            'is-invalid':
+              registerationForm.get('lastname')?.touched &&
+              registerationForm.get('lastname')?.invalid
+          }"
+        />
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Lastname.errors?.['required'] && (Lastname.touched || Lastname.dirty) "
+        >
+          Last Name is Requried.
+        </div>
+
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Lastname.errors?.['minlength'] && (Lastname.touched || Lastname.dirty) "
+        >
+          Last Name is too short.
+        </div>
+
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Lastname.errors?.['pattern'] && (Lastname.dirty || Lastname.touched) "
+        >
+          Last Name should start with Alphabet.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input
+          [(ngModel)]="email"
+          type="text"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter Your Email *"
+          required
+          [ngClass]="{
+            'is-invalid':
+              registerationForm.get('email')?.touched &&
+              registerationForm.get('email')?.invalid
+          }"
+        />
+      </div>
+      <div
+        style="width: max-content; display: block; margin-top: -0.75rem"
+        class="form-text text-danger"
+        *ngIf="Email.errors?.['required'] && (Email.touched || Email.dirty) "
+      >
+        Email is Requried.
+      </div>
+
+      <div
+        style="width: max-content; display: block; margin-top: -0.75rem"
+        class="form-text text-danger"
+        *ngIf="Email.errors?.['email'] && (Email.touched || Email.dirty) "
+      >
+        Email is Invalid.
+      </div>
+
+      <div>
+        <input
+          [(ngModel)]="password"
+          type="password"
+          formControlName="password"
+          placeholder="Password *"
+          id="form3Example4cg"
+          class="form-control form-control-lg"
+          required
+          [ngClass]="{
+            'is-invalid':
+              registerationForm.get('password')?.touched &&
+              registerationForm.get('password')?.invalid
+          }"
+        />
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Password.errors?.['required'] && (Password.touched || Password.dirty) "
+        >
+          Password is Requried.
+        </div>
+
+        <div
+          style="width: max-content; display: block; margin-top: -0.75rem"
+          class="form-text text-danger"
+          *ngIf="Password.errors?.['minlength'] && (Password.dirty || Password.touched) "
+        >
+          Password should be at least 6 characters long.
+        </div>
+      </div>
+
+      <button
+        style="background-color: black"
+        type="button"
+        (click)="register()"
+      >
+        Sign Up
+      </button>
+
+      <p class="message">Already Have account? <a href="/login">Sign In</a></p>
+    </form>
+  </div>
+</div>

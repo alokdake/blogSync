@@ -1,0 +1,103 @@
+<!-- <nav
+  style="font-family: cursive; font-size: larger"
+  class="navbar navbar-expand-lg navbar-dark bg-dark"
+>
+  <a
+    *ngIf="userDetail"
+    routerLink="/userprofile"
+    style="cursor: pointer"
+    class="navbar-brand"
+    >logged by <b>{{ userDetail.firstname }}</b>
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/home" class="nav-link"
+          >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/category" class="nav-link"
+          >Category <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a (click)="create()" class="nav-link"
+          >Create Blog <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/login" class="nav-link">Admin</a>
+      </li>
+      <li *ngIf="userDetail" style="cursor: pointer" class="nav-item active">
+        <a (click)="logout()" class="nav-link">Log Out</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+        #searchInput
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</nav> -->
+
+<body>
+  <div class="container">
+    <div *ngIf="blogData" class="card-container">
+      <div *ngFor="let blog of blogData" class="card">
+        <img src="{{ blog.imgUrl }}" class="card__image" alt="img" />
+
+        <div class="card__content">
+          <div class="card__title">
+            <h1>
+              <b
+                ><u>{{ blog.title | titlecase }}</u></b
+              >
+            </h1>
+          </div>
+          <div class="card__title">
+            <h2>{{ blog.category }}</h2>
+          </div>
+          <div
+            style="height: 336px !important; overflow: auto"
+            class="card__date"
+          >
+            {{ blog.description }}
+          </div>
+          <div style="text-align: end; font-size: larger">
+            <small class="text-muted">
+              Author
+              <cite title="Source Title"
+                ><b>{{ blog.author }}</b></cite
+              >
+            </small>
+          </div>
+          <div style="text-align: end">
+            <small class="text-muted">{{
+              blog.createdAt | date : "medium"
+            }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</body>

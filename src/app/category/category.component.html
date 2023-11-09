@@ -1,0 +1,102 @@
+<body>
+  <div id="wrapper" class="toggled">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a> Search By Category </a>
+        </li>
+        <li>
+          <a
+            ><select
+              (change)="filterByCategory(selectedCategory)"
+              [(ngModel)]="selectedCategory"
+              style="
+                width: 200px;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f7f7f7;
+                color: #333;
+              "
+            >
+              <option value="All">All</option>
+              <option
+                *ngFor="let category of allBlogs"
+                value="{{ category.category }}"
+              >
+                {{ category.category }}
+              </option>
+            </select>
+          </a>
+        </li>
+        <div *ngFor="let filter of filteredBlogs">
+          <div>
+            <p>
+              {{ filter.title }}
+            </p>
+          </div>
+        </div>
+      </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="container">
+          <div *ngFor="let blogs of filteredBlogs" class="card">
+            <div
+              style="cursor: pointer"
+              (click)="viewBlog(blogs._id)"
+              class="card-header"
+            >
+              <img src="{{ blogs.imgUrl }}" alt="rover" />
+            </div>
+            <div class="card-body">
+              <span class="tag tag-teal">{{ blogs.category }}</span>
+              <h4>{{ blogs.title }}</h4>
+              <div
+                style="
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  cursor: pointer;
+                "
+              >
+                <p>
+                  {{ blogs.description }}
+                </p>
+              </div>
+
+              <div class="user">
+                <div class="user-info">
+                  <h5>{{ blogs.author }}</h5>
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <small>{{ blogs.createdAt | date : "medium" }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+</body>

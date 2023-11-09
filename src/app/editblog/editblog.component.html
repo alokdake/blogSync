@@ -1,0 +1,133 @@
+<!-- <nav
+  style="font-family: cursive; font-size: larger"
+  class="navbar navbar-expand-lg navbar-dark bg-dark"
+>
+  <a
+    *ngIf="userDetail"
+    routerLink="/userprofile"
+    style="cursor: pointer"
+    class="navbar-brand"
+    >logged by <b>{{ userDetail.firstname }}</b>
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/home" class="nav-link"
+          >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/category" class="nav-link"
+          >Category <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/createblog" class="nav-link"
+          >Create Blog <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/login" class="nav-link">Admin</a>
+      </li>
+      <li *ngIf="userDetail" style="cursor: pointer" class="nav-item active">
+        <a (click)="logout()" class="nav-link">Log Out</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+        #searchInput
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</nav> -->
+
+<div class="login-page">
+  <div *ngIf="blogData" class="form">
+    <h1><b>Update Blog</b></h1>
+    <br />
+    <form class="login-form">
+      <div style="text-align: center">
+        <div *ngIf="message">
+          {{ message }}
+        </div>
+        <div>
+          <img
+            style="height: 100px; margin-bottom: 15px"
+            [src]="blogData.imgUrl"
+            *ngIf="blogData.imgUrl"
+          />
+          <!-- <img
+            style="height: 100px; margin-bottom: 15px"
+            [src]="blogData.imgUrl"
+            *ngIf="blogData.imgUrl && !imgUrl"
+          />
+
+          <img
+            style="height: 100px; margin-bottom: 15px"
+            [src]="imgUrl"
+            *ngIf="imgUrl"
+          /> -->
+        </div>
+        <div>
+          <label class="file">
+            <input
+              type="file"
+              id="file"
+              (change)="selectFile($event)"
+              aria-label="File browser example"
+            />
+            <span class="file-custom"></span>
+          </label>
+        </div>
+      </div>
+      <input
+        class="form-control"
+        [(ngModel)]="blogData.title"
+        type="text"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Title"
+      />
+      <textarea
+        class="form-control"
+        [(ngModel)]="blogData.description"
+        type="text"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Description"
+        name=""
+        id=""
+        cols="10"
+        rows="5"
+      ></textarea>
+      <br />
+      <!-- <input
+
+      /> -->
+      <input
+        class="form-control"
+        [(ngModel)]="blogData.category"
+        type="text"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Category"
+      />
+      <button type="button" (click)="updateform()">Update Blog</button>
+    </form>
+  </div>
+</div>

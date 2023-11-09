@@ -1,0 +1,229 @@
+<!-- <nav
+  style="font-family: cursive; font-size: larger"
+  class="navbar navbar-expand-lg navbar-dark bg-dark"
+>
+  <a
+    *ngIf="userDetail"
+    routerLink="/userprofile"
+    style="cursor: pointer"
+    class="navbar-brand"
+    >logged by <b>{{ userDetail.firstname }}</b>
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/home" class="nav-link"
+          >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/category" class="nav-link"
+          >Category <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a (click)="create()" class="nav-link"
+          >Create Blog <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li style="cursor: pointer" class="nav-item active">
+        <a routerLink="/login" class="nav-link">Admin</a>
+      </li>
+      <li *ngIf="userDetail" style="cursor: pointer" class="nav-item active">
+        <a (click)="logout()" class="nav-link">Log Out</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+
+        #searchInput
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</nav> -->
+
+<main class="container">
+  <div
+    style="
+      padding: 3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+    "
+  >
+    <div style="padding: 3em" *ngIf="loggedInUserDetails" class="card">
+      <img
+        style="width: 200px; height: 100px; margin-top: 25px; margin-left: 5px"
+        src="https://img.freepik.com/premium-photo/landscape-photo-cute-cat-background_557679-376.jpg?w=360"
+        alt="User image"
+        class="card__image"
+      />
+      <div class="card__text">
+        <h1 style="margin-top: 10px" class="card-title">
+          {{ loggedInUserDetails.firstname }} {{ loggedInUserDetails.lastname }}
+        </h1>
+        <p>
+          <b>{{ loggedInUserDetails.email }}</b>
+        </p>
+      </div>
+      <ul class="card__info">
+        <li>
+          <span class="card__info__stats">{{ userBlogCount }}</span>
+          <span>My Blogs</span>
+        </li>
+      </ul>
+      <div class="card__action">
+        <button
+          (click)="update(loggedInUserId)"
+          style="background-color: black"
+          class="card__action__button card__action--follow"
+        >
+          Edit Profile
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="container">
+  <div
+    (click)="viewBlog(blogs._id)"
+    *ngFor="let blogs of userBlogs"
+    class="card"
+    style="display: inline-block; width: 300px; margin: 3px"
+  >
+    <div style="cursor: pointer" class="card-header">
+      <img src="{{ blogs.imgUrl }}" alt="rover" />
+    </div>
+    <div class="card-body">
+      <span class="tag tag-teal">{{ blogs.category }}</span>
+      <h4>{{ blogs.title }}</h4>
+      <div
+        style="
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          cursor: pointer;
+        "
+      >
+        <p>
+          {{ blogs.description }}
+        </p>
+      </div>
+
+      <div class="user">
+        <div class="user-info">
+          <h5>{{ blogs.author }}</h5>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <small>{{ blogs.createdAt | date : "medium" }}</small>
+          </div>
+          <button
+            (click)="edit(blogs._id)"
+            style="background-color: rgb(255, 255, 255); margin-right: 10px"
+            mat-button
+          >
+            <b>Edit</b>
+          </button>
+          <button
+            (click)="delete(blogs._id)"
+            style="background-color: rgb(255, 255, 255)"
+            mat-button
+          >
+            <b>Delete</b>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+<br />
+<div style="margin: auto" class="text-center">
+  <h1><b>My Reported Blog</b></h1>
+</div>
+
+<div class="container">
+  <div
+    *ngFor="let blogs of usersReportedBlogs"
+    class="card"
+    style="display: inline-block; width: 300px; margin: 3px"
+  >
+    <div class="card-header">
+      <img src="{{ blogs.imgUrl }}" alt="rover" />
+    </div>
+    <div class="card-body">
+      <span class="tag tag-teal">{{ blogs.category }}</span>
+      <h4>{{ blogs.title }}</h4>
+      <div
+        style="
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          cursor: pointer;
+        "
+      >
+        <p>
+          <b>{{ blogs.reasons }}</b>
+        </p>
+      </div>
+      <div
+        style="
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          cursor: pointer;
+        "
+      >
+        <p>
+          {{ blogs.description }}
+        </p>
+      </div>
+      <div class="user">
+        <div class="user-info">
+          <h5>{{ blogs.author }}</h5>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <small>{{ blogs.createdAt | date : "medium" }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

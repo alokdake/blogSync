@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class BlogbackendService {
-  private baseURL = 'http://localhost:1818/';
+  private baseURL = 'https://blogsyncbackend.onrender.com/';
   private getAllUsersURL = 'api/v1/auth';
   private registerationURL = 'api/v1/auth/signup';
   private loginURL = 'api/v1/auth/signin';
